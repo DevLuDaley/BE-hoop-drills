@@ -26,23 +26,23 @@ Routine.create([
                  { routine_name: 'Off Hand Drills' },
                  { routine_name: 'For the Bigs' },
                  { routine_name: 'Hops' },
-                 { routine_name: 'Play Making Drills' },
+                 { routine_name: 'Play-Making-Drills' },
                  { routine_name: 'Situational Hoops' }
                ])
 
 r1 = Routine.all[0]
 r1.drills.create(drill_type: 'General', drill_name: 'Free-Throws', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r1.drills.create(drill_type: 'Forward', drill_name: 'Drop-Step-Shot', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r1.drills.create(drill_type: 'Guard', drill_name: 'Floater-Jump-Shot', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r1.drills.create(drill_type: 'General', drill_name: 'Mican-Drill', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r2 = Routine.all[1]
-r2.drills.create(drill_type: 'General', drill_name: 'Post-Fade-Away-Jump-Shot', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r2.drills.create(drill_type: 'Guard', drill_name: 'Gears', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r3 = Routine.all[2]
-r3.drills.create(drill_type: 'Guard', drill_name: 'Elliptical', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r4 = Routine.all[4]
-r4.drills.create(drill_type: 'General', drill_name: 'Suicides', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r4.drills.create(drill_type: 'General', drill_name: 'Taps', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r5 = Routine.all[4]
-r5.drills.create(drill_type: 'Center', drill_name: 'Backboard-Taps', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
-r5.drills.create(drill_type: 'Guard', drill_name: 'Off-Handed-In-And-Outs', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r1.drills.create(drill_type: 'Forward', drill_name: 'Drop-Step-Shot', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r1.drills.create(drill_type: 'Guard', drill_name: 'Floater-Jump-Shot', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r1.drills.create(drill_type: 'General', drill_name: 'Mican-Drill', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r2 = Routine.all[1]
+# r2.drills.create(drill_type: 'General', drill_name: 'Post-Fade-Away-Jump-Shot', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r2.drills.create(drill_type: 'Guard', drill_name: 'Gears', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r3 = Routine.all[2]
+# r3.drills.create(drill_type: 'Guard', drill_name: 'Elliptical', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r4 = Routine.all[4]
+# r4.drills.create(drill_type: 'General', drill_name: 'Suicides', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r4.drills.create(drill_type: 'General', drill_name: 'Taps', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r5 = Routine.all[4]
+# r5.drills.create(drill_type: 'Center', drill_name: 'Backboard-Taps', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+# r5.drills.create(drill_type: 'Guard', drill_name: 'Off-Handed-In-And-Outs', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))

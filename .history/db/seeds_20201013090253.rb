@@ -26,7 +26,7 @@ Routine.create([
                  { routine_name: 'Off Hand Drills' },
                  { routine_name: 'For the Bigs' },
                  { routine_name: 'Hops' },
-                 { routine_name: 'Play Making Drills' },
+                 { routine_name: 'Play-Making-Drills' },
                  { routine_name: 'Situational Hoops' }
                ])
 

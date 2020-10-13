@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'faker'
-
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -10,23 +8,23 @@ require 'faker'
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Drill.create([
-               { drill_type: 'Guard', drill_name: 'Cross-Over-Dribble', reps: '1', sets: '1' },
-               { drill_type: 'General', drill_name: 'Suicides', reps: '2', sets: '1' },
-               { drill_type: 'Forward', drill_name: 'Pass-&-Cut-Away', reps: '1', sets: '1.5' },
-               { drill_type: 'Forward', drill_name: 'Drop-Step', reps: '1', sets: '1.5' },
-               { drill_type: 'Center', drill_name: 'Post-Moves', reps: '1', sets: '1' },
-               { drill_type: 'Guard', drill_name: 'Sucide-Free-Throws', reps: '1', sets: '2.5' },
-               { drill_type: 'General', drill_name: 'Mican-Drill', reps: '1', sets: '1.5' },
-               { drill_type: 'Guard', drill_name: 'Cross-Over-Dribble', reps: '1', sets: '1.5' },
-               { drill_type: 'General', drill_name: 'Sucide-Free-Throws', reps: '1', sets: '2.5' },
-               { drill_type: 'General', drill_name: 'Mican-Drill', reps: '2', sets: '3.5' }
+               { drill_type: 'cardio', drill_name: 'basketball', reps: '1', sets: '1' },
+               { drill_type: 'cardio', drill_name: 'running', reps: '2', sets: '1' },
+               { drill_type: 'cardio', drill_name: 'bike_riding', reps: '1', sets: '1.5' },
+               { drill_type: 'cardio', drill_name: 'basketball', reps: '1', sets: '1.5' },
+               { drill_type: 'cardio', drill_name: 'bike_riding', reps: '1', sets: '1.5' },
+               { drill_type: 'cardio', drill_name: 'jogging', reps: '1', sets: '1' },
+               { drill_type: 'cardio', drill_name: 'sprinting', reps: '1', sets: '2.5' },
+               { drill_type: 'cardio', drill_name: 'bike_riding', reps: '1', sets: '1.5' },
+               { drill_type: 'cardio', drill_name: 'sprinting', reps: '1', sets: '2.5' },
+               { drill_type: 'cardio', drill_name: 'bike_riding', reps: '2', sets: '3.5' }
              ])
 
 Routine.create([
                  { routine_name: 'Off Hand Drills' },
                  { routine_name: 'For the Bigs' },
                  { routine_name: 'Hops' },
-                 { routine_name: 'Play Making Drills' },
+                 { routine_name: 'Play-Making-Drills' },
                  { routine_name: 'Situational Hoops' }
                ])
 
