@@ -37,7 +37,6 @@ end
 The name after module should be whatever you named your project
 
 `rails g controller api/v1/drills --no-test-framework`
-`rails g controller api/v1/routines --no-test-framework`
 
 Add our index and create methods to `/app/controllers/api/v1/drills_controller`:
 

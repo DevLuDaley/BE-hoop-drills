@@ -36,60 +36,59 @@ end
 ```
 The name after module should be whatever you named your project
 
-`rails g controller api/v1/drills --no-test-framework`
-`rails g controller api/v1/routines --no-test-framework`
+`rails g controller api/v1/workouts --no-test-framework`
 
-Add our index and create methods to `/app/controllers/api/v1/drills_controller`:
+Add our index and create methods to `/app/controllers/api/v1/workouts_controller`:
 
 ```rb
-# app/controllers/api/v1/drills_controller
+# app/controllers/api/v1/workouts_controller
 
-class Api::V1::DrillsController < ApplicationController
-# before_action :find_drill, only: [:update]
+class Api::V1::WorkoutsController < ApplicationController
+# before_action :find_workout, only: [:update]
   def index
-    @drills = Drill.all.order(:created_at)
-    render json: @drills, status: 200
+    @workouts = Workout.all.order(:created_at)
+    render json: @workouts, status: 200
   end
 
   def create
-    @drill = Drill.create(drill_params)
-    render json: @drill, status: 201
+    @workout = Workout.create(workout_params)
+    render json: @workout, status: 201
   end
 
   def destroy
-    drill = Drill.find(params[:id])
-    if drill.destroy
-      render json: {drillId: drill.id}, status: 200
+    workout = Workout.find(params[:id])
+    if workout.destroy
+      render json: {workoutId: workout.id}, status: 200
     end
   end
 
   def update
-    @drill = Drill.find(params[:id])
-    # if @drill.update(drill_params)
-    #   render json: @drill, status: 200
+    @workout = Workout.find(params[:id])
+    # if @workout.update(workout_params)
+    #   render json: @workout, status: 200
 
 
-#  @drill.update(drill_params)
-    if @drill.save
-      render json: @drill, status: :accepted
+#  @workout.update(workout_params)
+    if @workout.save
+      render json: @workout, status: :accepted
     else
-      render json: { errors: @drill.errors.full_messages }, status: :unprocessible_entity
+      render json: { errors: @workout.errors.full_messages }, status: :unprocessible_entity
     # end
     end
   end
 
   private
-    def drill_params
-      params.require(:drill).permit(:type, :name, :duration, :distance)
+    def workout_params
+      params.require(:workout).permit(:type, :name, :duration, :distance)
     end
 
 
-#   def drill_params
+#   def workout_params
 #     params.permit(:title, :content)
 #   end
 
-#   def find_drill
-#     @drill = Drill.find(params[:id])
+#   def find_workout
+#     @workout = Workout.find(params[:id])
 #   end
 end
 
@@ -101,7 +100,7 @@ The routes we define in `config/routes.rb` need to correspond to the namespaced 
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :drills #, only: [:index, :update], :routine
+      resources :workouts #, only: [:index, :update], :routine
     end
   end
 end
@@ -114,7 +113,7 @@ Next let's setup our models:
 `rails g model Rotuine name:string`
 -name
 
-`rails g model Drill type:string, name:string, distance:int, duration:int`
+`rails g model Workout type:string, name:string, distance:int, duration:int`
 - type:
 - name:
 - distance:
@@ -126,14 +125,14 @@ Then run
 `rails db:migrate`
 
 `rails g serializer routine`
-`rails g serializer drill`
+`rails g serializer workout`
 
 `RoutineSerializer` 
 ```ruby
 # routine_serializer.rb
 class RoutineSerializer < ActiveModel::Serializer
   # attributes :id
-  # has_many :drills
+  # has_many :workouts
   attributes :id, :name # , :duration, :distance
 end
 
@@ -141,9 +140,9 @@ end
 
 
 ```rb
-# drill_serializer.rb
-class DrillSerializer < ActiveModel::Serializer
-  attributes :id, :name, :drill_type, :distance, :duration
+# workout_serializer.rb
+class WorkoutSerializer < ActiveModel::Serializer
+  attributes :id, :name, :workout_type, :distance, :duration
   # has_many :routines
   # attributes :name
 end
@@ -152,20 +151,20 @@ end
 
 ```zsh
 # console error message
-ActiveRecord::SubclassNotFound (The single-table inheritance mechanism failed to locate the subclass: 'cardio'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Drill.inheritance_column to use another column for that information.
+ActiveRecord::SubclassNotFound (The single-table inheritance mechanism failed to locate the subclass: 'cardio'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Workout.inheritance_column to use another column for that information.
 ```
 
 the erro above means that we need to
-rename the `type` column to `drill_type` in our `drills-table`
+rename the `type` column to `workout_type` in our `workouts-table`
 
-`rails g migration rename_type_to_drill_type`
+`rails g migration rename_type_to_workout_type`
 
 edit the migration file
 
 ```rb
-class RenameTypeToDrillType < ActiveRecord::Migration[6.0]
+class RenameTypeToWorkoutType < ActiveRecord::Migration[6.0]
   def change
-    rename_column :drills, :type, :drill_type
+    rename_column :workouts, :type, :workout_type
   end
 end
 
@@ -173,35 +172,35 @@ end
 
 `rails db:migrate`
 
-Now that our model and table is setup, we should be able to create a new drill in the console
+Now that our model and table is setup, we should be able to create a new workout in the console
 
 
 Test this by running rails c then 
 
 ```rb
-Drill.create(drill_type: "cardio", name: "basketball", distance: 3, duration: 2)
+Workout.create(workout_type: "cardio", name: "basketball", distance: 3, duration: 2)
 ```
 
 test api endpoints
 `rails s`
 
-http://localhost:3000/api/v1/drills
+http://localhost:3000/api/v1/workouts
 http://localhost:3000/api/v1/routines
 
 Add the following to `db/seeds.rb`:
 
 ```
-Drill.create([
-                 { drill_type: 'cardio', name: 'basketball', distance: '1', duration: '1' },
-                 { drill_type: 'cardio', name: 'running', distance: '2', duration: '1' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'basketball', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'jogging', distance: '1', duration: '1' },
-                 { drill_type: 'cardio', name: 'sprinting', distance: '1', duration: '2.5' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'sprinting', distance: '1', duration: '2.5' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '2', duration: '3.5' }
+Workout.create([
+                 { workout_type: 'cardio', name: 'basketball', distance: '1', duration: '1' },
+                 { workout_type: 'cardio', name: 'running', distance: '2', duration: '1' },
+                 { workout_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
+                 { workout_type: 'cardio', name: 'basketball', distance: '1', duration: '1.5' },
+                 { workout_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
+                 { workout_type: 'cardio', name: 'jogging', distance: '1', duration: '1' },
+                 { workout_type: 'cardio', name: 'sprinting', distance: '1', duration: '2.5' },
+                 { workout_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
+                 { workout_type: 'cardio', name: 'sprinting', distance: '1', duration: '2.5' },
+                 { workout_type: 'cardio', name: 'bike_riding', distance: '2', duration: '3.5' }
                ])
 
 Routine.create([
@@ -245,13 +244,13 @@ touch index.html src/index.js
 <!-- `mkdir styles && cd $_` -->
 <!-- `touch index.css` -->
 
-### Example Feature (Updating a drill)
+### Example Feature (Updating a workout)
 
 We want to create the following features:
 
-> As a user, when the page loads I should see a list of drills. Next to the title of each drill will be a button to edit that drill.
+> As a user, when the page loads I should see a list of workouts. Next to the title of each workout will be a button to edit that workout.
 
-> As a user, when I click the edit button, I will see a form with the values of that drill in the input fields. I can make changes, click 'Save Drill' and see the changes reflected in the list of drills.
+> As a user, when I click the edit button, I will see a form with the values of that workout in the input fields. I can make changes, click 'Save Workout' and see the changes reflected in the list of workouts.
 
 Delivering these features will involve several steps and we will want to be sure **to work iteratively**. We will make it work and then make it better.
 
@@ -267,23 +266,23 @@ add code to html
   </head>
   <body>
         <div class="container">
-      <div id="new-drill-container">
-        <form id="new-drill-form">
-          <input type="text" name="drill-type" id="new-drill-type"> 
-          <input type="text" name="drill-name" id="new-drill-name">
-          <input type="text" name="drill-distance" id="new-drill-distance">
-          <input type="text" name="drill-duration" id="new-drill-duration">
-          <input type="submit" value="Save drill">
+      <div id="new-workout-container">
+        <form id="new-workout-form">
+          <input type="text" name="workout-type" id="new-workout-type"> 
+          <input type="text" name="workout-name" id="new-workout-name">
+          <input type="text" name="workout-distance" id="new-workout-distance">
+          <input type="text" name="workout-duration" id="new-workout-duration">
+          <input type="submit" value="Save workout">
         </form>
       </div>
-      <div id="drills-container">
+      <div id="workouts-container">
 
       </div>
     </div>
 
-    <script type="text/javascript" src="src/components/drill.js"></script>
-    <script type="text/javascript" src="src/adapters/drillsAdapter.js"></script>
-    <script type="text/javascript" src="src/components/drills.js"></script>
+    <script type="text/javascript" src="src/components/workout.js"></script>
+    <script type="text/javascript" src="src/adapters/workoutsAdapter.js"></script>
+    <script type="text/javascript" src="src/components/workouts.js"></script>
     <script type="text/javascript" src="src/components/app.js"></script>
     <script type="text/javascript" src="src/index.js"></script>
   </body>
@@ -340,49 +339,49 @@ const app = new App()
 
 ```
 
-`touch adapters/drillsAdapter.js`
+`touch adapters/workoutsAdapter.js`
 
-The drillsAdapter will be responsible for communicating
+The workoutsAdapter will be responsible for communicating
   with our rails API backend
 
 ```js
-// drillsAdapter.js
+// workoutsAdapter.js
 
-class drillsAdapter {
+class workoutsAdapter {
   constructor() {
-    this.baseUrl = "http://localhost:3000/api/v1/drills"
+    this.baseUrl = "http://localhost:3000/api/v1/workouts"
   }
 
-  getdrills() {
+  getworkouts() {
     return fetch(this.baseUrl).then(res => res.json())
   }
 
-  createdrill(body) {
-    const drillCreateParams = {
+  createworkout(body) {
+    const workoutCreateParams = {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ body })
     }
-    return fetch(this.baseUrl, drillCreateParams).then(res => res.json())
+    return fetch(this.baseUrl, workoutCreateParams).then(res => res.json())
   }
 
-  deletedrill(drillId) {
-    const drillDeleteParams = {
+  deleteworkout(workoutId) {
+    const workoutDeleteParams = {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
       }
     }
-    return fetch(`${this.baseUrl}/${drillId}`, drillDeleteParams).then(res =>
+    return fetch(`${this.baseUrl}/${workoutId}`, workoutDeleteParams).then(res =>
       res.json()
     )
   }
 }
 ```
 
-`touch components/app.js components/drill.js components/drills.js`
+`touch components/app.js components/workout.js components/workouts.js`
 
 update App component
 
@@ -390,7 +389,7 @@ update App component
 // app.js
 class App {
   constructor() {
-    this.drills = new Drills()
+    this.workouts = new Workouts()
   }
 }
 ```
@@ -399,82 +398,82 @@ class App {
 
 `index.js` gets loaded and calls `new App()`
 which will run the App constructor function defined above, which will set a
-property on that newly created app called drills that points to a new instance of
-our `drills` object. 
+property on that newly created app called workouts that points to a new instance of
+our `workouts` object. 
 
 If that was confusing, stop, re-read it and walk through the
 app so far until the flow makes sense. Managing all the different files and the
 game of catch we're playing with them is key to understanding how this project
 works.
 
-# build drills.js
+# build workouts.js
 
 ---
 ```js
-// drills.js
-class Drills {
+// workouts.js
+class Workouts {
   constructor() {
-    this.drills = []
+    this.workouts = []
     this.initBindingsAndEventListeners()
-    this.adapter = new DrillsAdapter()
-    this.fetchAndLoadDrills()
+    this.adapter = new WorkoutsAdapter()
+    this.fetchAndLoadWorkouts()
   }
 
   initBindingsAndEventListeners() {
-    this.drillsForm = document.getElementById('new-drill-form')
-    this.drillInput = document.getElementById('new-drill-body')
-    this.drillsNode = document.getElementById('drills-container')
-    this.drillsForm.addEventListener('submit',this.handleAddDrill.bind(this))
-    this.drillsNode.addEventListener('click',this.handleDeleteDrill.bind(this))
+    this.workoutsForm = document.getElementById('new-workout-form')
+    this.workoutInput = document.getElementById('new-workout-body')
+    this.workoutsNode = document.getElementById('workouts-container')
+    this.workoutsForm.addEventListener('submit',this.handleAddWorkout.bind(this))
+    this.workoutsNode.addEventListener('click',this.handleDeleteWorkout.bind(this))
   }
 
-  fetchAndLoadDrills() {
-    this.adapter.getDrills()
-    .then( drillsJSON => drillsJSON.forEach( drill => this.drills.push( new Drill(drill) )))
+  fetchAndLoadWorkouts() {
+    this.adapter.getWorkouts()
+    .then( workoutsJSON => workoutsJSON.forEach( workout => this.workouts.push( new Workout(workout) )))
       .then( this.render.bind(this) )
       .catch( (error) => console.log(error) )
   }
 
-  handleAddDrill() {
+  handleAddWorkout() {
     event.preventDefault()
-    const body = this.drillInput.value
-    this.adapter.createDrill(body)
-    .then( (drillJSON) => this.drills.push(new Drill(drillJSON)) )
+    const body = this.workoutInput.value
+    this.adapter.createWorkout(body)
+    .then( (workoutJSON) => this.workouts.push(new Workout(workoutJSON)) )
     .then(  this.render.bind(this) )
-    .then( () => this.drillInput.value = '' )
+    .then( () => this.workoutInput.value = '' )
   }
 
-  handleDeleteDrill() {
-    if (event.target.dataset.action === 'delete-drill' && event.target.parentElement.classList.contains("drill-element")) {
-      const drillId = event.target.parentElement.dataset.drillid
-      this.adapter.deleteDrill(drillId)
-      .then( resp => this.removeDeletedDrill(resp) )
+  handleDeleteWorkout() {
+    if (event.target.dataset.action === 'delete-workout' && event.target.parentElement.classList.contains("workout-element")) {
+      const workoutId = event.target.parentElement.dataset.workoutid
+      this.adapter.deleteWorkout(workoutId)
+      .then( resp => this.removeDeletedWorkout(resp) )
     }
   }
 
-  removeDeletedDrill(deleteResponse) {
-    this.drills = this.drills.filter( drill => drill.id !== deleteResponse.drillId )
+  removeDeletedWorkout(deleteResponse) {
+    this.workouts = this.workouts.filter( workout => workout.id !== deleteResponse.workoutId )
     this.render()
   }
 
-  drillsHTML() {
-    return this.drills.map( drill => drill.render() ).join('')
+  workoutsHTML() {
+    return this.workouts.map( workout => workout.render() ).join('')
   }
 
   render() {
-    this.drillsNode.innerHTML = `<ul>${this.drillsHTML()}</ul>`
+    this.workoutsNode.innerHTML = `<ul>${this.workoutsHTML()}</ul>`
   }
 }
 ```
 
 
-# * Next let's build out the `Drill` class/object in `drill.js`:
+# * Next let's build out the `Workout` class/object in `workout.js`:
 
 ```js
-class Drill {
-  constructor(drillJSON) {
-    this.body = drillJSON.body
-    this.id = drillJSON.id
+class Workout {
+  constructor(workoutJSON) {
+    this.body = workoutJSON.body
+    this.id = workoutJSON.id
   }
 
   renderShow() {
@@ -482,11 +481,11 @@ class Drill {
   }
 
   render() {
-    return `<li data-drillid='${this.id}' data-props='${JSON.stringify(
+    return `<li data-workoutid='${this.id}' data-props='${JSON.stringify(
       this
-    )}' class='drill-element'><a class="show-link" href='#'>${
+    )}' class='workout-element'><a class="show-link" href='#'>${
       this.body
-    }</a> <button data-action='edit-drill'>Edit</button> <i data-action='delete-drill' class="em em-scream_cat"></i></li>`
+    }</a> <button data-action='edit-workout'>Edit</button> <i data-action='delete-workout' class="em em-scream_cat"></i></li>`
   }
 }
 ```
@@ -521,7 +520,7 @@ ul {
   padding-left: 20px;
 }
 
-.delete-drill-link {
+.delete-workout-link {
   color:red;
 }
 ```
