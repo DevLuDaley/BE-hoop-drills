@@ -24,11 +24,6 @@ User Can...
     properties[ drill-name, drill-type, ]
     filter by all drills vs drill-type.guard-drills
 
-
- # What data will you keep track of in your redux store? 
- 
- # Will you need local state in any of your components, too?
-
 1. Come up with a project idea of your own, and devote some time to a planning session. 
 Think about the following:
 What will your app do? What is the user experience?
