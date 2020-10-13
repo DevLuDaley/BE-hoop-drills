@@ -111,7 +111,7 @@ end
 
 
 Next let's setup our models:
-`rails g model Routine routine_name:string`
+`rails g model Routine name:string`
 -name
 
 `rails g model Drill type:string, name:string, distance:int, duration:int`
