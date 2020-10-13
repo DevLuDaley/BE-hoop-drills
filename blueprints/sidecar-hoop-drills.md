@@ -120,10 +120,6 @@ Next let's setup our models:
 - reps:
 - sets:
 
-Then run 
-`rails db:create` 
-&&
-`rails db:migrate`
 
 `rails g serializer routine`
 `rails g serializer drill`
@@ -150,27 +146,10 @@ end
 
 ```
 
-```zsh
-# console error message
-ActiveRecord::SubclassNotFound (The single-table inheritance mechanism failed to locate the subclass: 'cardio'. This error is raised because the column 'type' is reserved for storing the class in case of inheritance. Please rename this column if you didn't intend it to be used for storing the inheritance class or overwrite Drill.inheritance_column to use another column for that information.
-```
-
-the erro above means that we need to
-rename the `type` column to `drill_type` in our `drills-table`
-
-`rails g migration rename_type_to_drill_type`
-
-edit the migration file
-
-```rb
-class RenameTypeToDrillType < ActiveRecord::Migration[6.0]
-  def change
-    rename_column :drills, :type, :drill_type
-  end
-end
-
-```
-
+# CREATE & MIGRATE DB
+Then run 
+`rails db:create` 
+&&
 `rails db:migrate`
 
 Now that our model and table is setup, we should be able to create a new drill in the console
@@ -179,50 +158,65 @@ Now that our model and table is setup, we should be able to create a new drill i
 Test this by running rails c then 
 
 ```rb
-Drill.create(drill_type: "cardio", name: "basketball", distance: 3, duration: 2)
+Drill.create(drill_type: "Guard", drill_name: "dribbles-cross-over", reps: 10, sets: 3)
+
 ```
 
 test api endpoints
-`rails s`
+`rails db:rest && rails s`
 
 http://localhost:3000/api/v1/drills
 http://localhost:3000/api/v1/routines
 
+```rb
+# rails generate migration create_join_table :routines, :drills 
+class CreateJoinTable < ActiveRecord::Migration[6.0]
+  def change
+    create_join_table :routines, :drills
+  end
+end
+```
+
+
 Add the following to `db/seeds.rb`:
+
+
+
+
 
 ```
 Drill.create([
-                 { drill_type: 'cardio', name: 'basketball', distance: '1', duration: '1' },
-                 { drill_type: 'cardio', name: 'running', distance: '2', duration: '1' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'basketball', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'jogging', distance: '1', duration: '1' },
-                 { drill_type: 'cardio', name: 'sprinting', distance: '1', duration: '2.5' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '1', duration: '1.5' },
-                 { drill_type: 'cardio', name: 'sprinting', distance: '1', duration: '2.5' },
-                 { drill_type: 'cardio', name: 'bike_riding', distance: '2', duration: '3.5' }
+                 { drill_type: 'cardio', drill_name: 'basketball', reps: '1', sets: '1' },
+                 { drill_type: 'cardio', drill_name: 'running', reps: '2', sets: '1' },
+                 { drill_type: 'cardio', drill_name: 'bike_riding', reps: '1', sets: '1.5' },
+                 { drill_type: 'cardio', drill_name: 'basketball', reps: '1', sets: '1.5' },
+                 { drill_type: 'cardio', drill_name: 'bike_riding', reps: '1', sets: '1.5' },
+                 { drill_type: 'cardio', drill_name: 'jogging', reps: '1', sets: '1' },
+                 { drill_type: 'cardio', drill_name: 'sprinting', reps: '1', sets: '2.5' },
+                 { drill_type: 'cardio', drill_name: 'bike_riding', reps: '1', sets: '1.5' },
+                 { drill_type: 'cardio', drill_name: 'sprinting', reps: '1', sets: '2.5' },
+                 { drill_type: 'cardio', drill_name: 'bike_riding', reps: '2', sets: '3.5' }
                ])
 
 Routine.create([
-                 { name: 'Weight Training' },
-                 { name: 'Cardio Rush' },
-                 { name: 'Hoops' },
-                 { name: 'Batman Chest' },
-                 { name: 'Gym Glutes' }
+                 { routine_name: 'Weight Training' },
+                 { routine_name: 'Cardio Rush' },
+                 { routine_name: 'Hoops' },
+                 { routine_name: 'Batman Chest' },
+                 { routine_name: 'Gym Glutes' }
                ])
 
 
 ```
 
 # reset DB (if needed)
-fix any db:seed errors then run `rails db:reset`
+fix any db:seed errors then run `rails db:rest && rails s`
 
 Once the reset command is used it will do the following:
 
-Drop the database: `rake db:drop`
-Load the schema: `rake db:schema:load`
-Seed the data: `rake db:seed`
+Drop the database: `rails db:drop`
+Load the schema: `rails db:schema:load`
+Seed the data: `rails db:seed`
 
 Why db:schema:load and not db:migrate?
 rake db:schema:load is much faster than rake db:migrate, because it loads the schema that we’ve already generated from db/schema.rb instead of going through all the migrations again.
