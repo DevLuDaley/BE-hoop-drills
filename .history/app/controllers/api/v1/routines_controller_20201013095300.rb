@@ -34,7 +34,7 @@ class Api::V1::RoutinesController < ApplicationController
   private
 
   def routine_params
-    params.require(:routine).permit(:routine_name, :id)
+    params.require(:routine).permit(:routine_name)
   end
 
   #   def drill_params
