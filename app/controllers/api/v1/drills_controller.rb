@@ -1,0 +1,38 @@
+class Api::V1::DrillsController < ApplicationController
+# before_action :find_drill, only: [:update]
+  def index
+    @drills = Drill.all.order(:created_at)
+    render json: @drills, status: 200
+  end
+
+  def create
+    @drill = Drill.create(drill_params)
+    render json: @drill, status: 201
+  end
+
+  def destroy
+    drill = Drill.find(params[:id])
+    if drill.destroy
+      render json: {drillId: drill.id}, status: 200
+    end
+  end
+
+  def update
+    @drill = Drill.find(params[:id])
+    # if @drill.update(drill_params)
+    #   render json: @drill, status: 200
+
+
+#  @drill.update(drill_params)
+    if @drill.save
+      render json: @drill, status: :accepted
+    else
+      render json: { errors: @drill.errors.full_messages }, status: :unprocessible_entity
+    # end
+    end
+  end
+
+  private
+    def drill_params
+      params.require(:drill).permit(:type, :name, :duration, :distance)
+    end
