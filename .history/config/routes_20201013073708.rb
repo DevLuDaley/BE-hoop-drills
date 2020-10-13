@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace :api do
     namespace :v1 do
-      resources :routines, :drills # , only: [:index, :update], :routine
+      resources :drills # , only: [:index, :update], :routine
     end
   end
 end
