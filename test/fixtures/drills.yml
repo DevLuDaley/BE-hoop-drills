@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  drill_type: 
+  drill_name: 
+  reps: 
+  sets: 1
+
+two:
+  drill_type: 
+  drill_name: 
+  reps: 
+  sets: 1

@@ -114,11 +114,11 @@ Next let's setup our models:
 `rails g model Routine routine_name:string`
 -name
 
-`rails g model Drill type:string, name:string, distance:int, duration:int`
+`rails g model Drill type:string, drill_name:string, reps:integer, sets:integer`
 - type:
 - name:
-- distance:
-- duration:
+- reps:
+- sets:
 
 Then run 
 `rails db:create` 
@@ -134,7 +134,7 @@ Then run
 class RoutineSerializer < ActiveModel::Serializer
   # attributes :id
   # has_many :drills
-  attributes :id, :name # , :duration, :distance
+  attributes :id, :routine_name # , :duration, :distance
 end
 
 ```
@@ -143,7 +143,7 @@ end
 ```rb
 # drill_serializer.rb
 class DrillSerializer < ActiveModel::Serializer
-  attributes :id, :name, :drill_type, :distance, :duration
+  attributes :id, :drill_name, :drill_type, :sets, :reps
   # has_many :routines
   # attributes :name
 end
