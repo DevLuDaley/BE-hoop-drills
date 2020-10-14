@@ -19,6 +19,7 @@ class Api::V1::RoutinesController < ApplicationController
   end
 
   def update
+    binding.pry
     @routine = Routine.find(params[:id])
     # if @routine.update(routine_params)
     #   render json: @routine, status: 200
@@ -35,7 +36,7 @@ class Api::V1::RoutinesController < ApplicationController
   private
 
   def routine_params
-    params.require(:routine).permit(:routine_name, :id)
+    params.require(:routine).permit(:routine_name, :id, :drill_name, :reps, :sets)
   end
 
   #   def drill_params
