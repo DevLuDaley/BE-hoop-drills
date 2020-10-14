@@ -19,12 +19,23 @@ class Api::V1::RoutinesController < ApplicationController
   end
 
   def update
-    binding.pry
     @routine = Routine.find(params[:id])
-    # if @routine.update(routine_params)
-    #   render json: @routine, status: 200
+    binding.pry
 
-    #  @routine.update(routine_params)
+    drill_name, reps, sets, drill_type = params.values_at(
+      :drill_name,
+      :drill_reps,
+      :drill_sets,
+      :drill_type
+    )
+
+    @routine.drills.build(
+      drill_name: drill_name,
+      reps: reps,
+      sets: sets,
+      drill_type: 'General'
+    )
+
     if @routine.save
       render json: @routine, status: :accepted
     else
