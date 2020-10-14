@@ -8,6 +8,7 @@ class Api::V1::RoutinesController < ApplicationController
   end
 
   def create
+    # binding.pry
     @routine = Routine.create(routine_params)
     render json: @routine, status: 201
   end
