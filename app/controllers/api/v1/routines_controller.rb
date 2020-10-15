@@ -24,8 +24,8 @@ class Api::V1::RoutinesController < ApplicationController
 
     drill_name, reps, sets, drill_type = params.values_at(
       :drill_name,
-      :drill_reps,
-      :drill_sets,
+      :reps,
+      :sets,
       :drill_type
     )
 
