@@ -20,7 +20,7 @@ class Api::V1::RoutinesController < ApplicationController
 
   def update
     @routine = Routine.find(params[:id])
-    binding.pry
+    # binding.pry
 
     drill_name, reps, sets, drill_type = params.values_at(
       :drill_name,
