@@ -14,9 +14,16 @@ class Api::V1::RoutinesController < ApplicationController
   end
 
   def destroy
+    # binding.pry
     routine = Routine.find(params[:id])
     render json: { routineId: routine.id }, status: 200 if routine.destroy
   end
+  
+  # def delete
+  #   binding.pry
+  #   routine = Routine.find(params[:id])
+  #   render json: { routineId: routine.id }, status: 200 if routine.destroy
+  # end
 
   def update
     @routine = Routine.find(params[:id])
