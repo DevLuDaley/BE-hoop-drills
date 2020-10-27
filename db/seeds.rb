@@ -23,10 +23,12 @@ Drill.create([
              ])
 
 Routine.create([
-                 { routine_name: 'Off Hand Drills' },
-                 { routine_name: 'For the Bigs' },
-                 { routine_name: 'Hops' },
-                 { routine_name: 'Play Making Drills' },
+                 { routine_name: 'Sick Handles' },
+                 { routine_name: 'Post Presence' },
+                 { routine_name: 'Vertical Leap' },
+                 { routine_name: 'Press Break' },
+                 { routine_name: 'Endurance' },
+                 { routine_name: 'Pure Buckets' },
                  { routine_name: 'Situational Hoops' }
                ])
 
@@ -46,3 +48,6 @@ r4.drills.create(drill_type: 'General', drill_name: 'Taps', reps: Faker::Number.
 r5 = Routine.all[4]
 r5.drills.create(drill_type: 'Center', drill_name: 'Backboard-Taps', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
 r5.drills.create(drill_type: 'Guard', drill_name: 'Off-Handed-In-And-Outs', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+r6 = Routine.all[5]
+r6.drills.create(drill_type: 'Guard', drill_name: 'Cutting To The Basket', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
+r6.drills.create(drill_type: 'Guard', drill_name: 'In-And-Outs', reps: Faker::Number.between(from: 1, to: 8), sets: Faker::Number.between(from: 1, to: 4))
