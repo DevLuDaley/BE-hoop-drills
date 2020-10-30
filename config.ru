@@ -6,7 +6,7 @@ run Rails.application
  
 use Rack::Cors do
  allow do
-   origins 'https://lets-meetup-app.herokuapp.com'
+   origins 'https://hoop-drills.netlify.app/'
    resource '*',
        :headers => :any,
        :methods => [:get, :post, :delete, :put, :patch, :options],
