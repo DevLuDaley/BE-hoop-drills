@@ -1,11 +1,6 @@
 # BE-Hoop-Drills 
 
-* backend of the Hoop Drills App
-
-
-
-# BE-Workout-Hero
-BE-Workout-Hero is the backend rails-only api repo supplying data to the Workout Hero app.
+BE-Hoop-Drills is the backend rails-only api repo supplying data to the Hoop Drills App.
 
 ## Installation
 
